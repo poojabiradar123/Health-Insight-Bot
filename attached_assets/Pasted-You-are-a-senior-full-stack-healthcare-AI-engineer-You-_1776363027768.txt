@@ -1,0 +1,180 @@
+You are a senior full-stack + healthcare AI engineer.
+
+You must upgrade my existing Clinical Medical Report Analysis system WITHOUT breaking current functionality.
+
+-------------------------------------
+🎯 GOAL
+-------------------------------------
+Enhance the system to be:
+- Clinically realistic
+- Production-ready
+- UI attractive
+- Feature-rich
+- Safe (no hallucinations)
+
+-------------------------------------
+🚨 DO NOT MODIFY CORE LOGIC
+-------------------------------------
+- Severity calculation must remain rule-based
+- Risk scoring must remain rule-based
+- Urgency must remain rule-based
+- LLM must ONLY generate explanation
+- Never allow LLM to classify or infer severity
+
+-------------------------------------
+🟢 FEATURES TO ADD (IN ORDER)
+-------------------------------------
+
+1. 📄 PDF REPORT DOWNLOAD
+
+Add a "Download Report" button.
+
+Report must include:
+- Patient Name
+- Risk Level
+- Urgency
+- Severity breakdown
+- Explanation
+- Recommendations
+- Confidence score
+
+Use reportlab library.
+
+-------------------------------------
+
+2. 📊 VISUALIZATION (UI IMPROVEMENT)
+
+Add charts using matplotlib:
+
+- Pie chart:
+  Normal vs Abnormal parameters
+
+- Bar chart:
+  Parameter values
+
+Display charts below analysis.
+
+-------------------------------------
+
+3. 🔐 LOGIN SYSTEM
+
+Add simple authentication:
+- Username + Password
+- Use session_state
+- Prevent access to analysis without login
+
+-------------------------------------
+
+4. 📁 HISTORY DOWNLOAD
+
+Allow users to:
+- View previous reports
+- Download past reports as PDF
+
+-------------------------------------
+
+5. ⚠️ INPUT VALIDATION (CRITICAL)
+
+Add validation:
+- No negative values
+- No invalid ranges
+- Handle empty fields safely
+
+If invalid:
+Return:
+"Invalid or inconsistent medical data"
+
+-------------------------------------
+
+6. 🧠 EXPLANATION SAFETY CONTROL
+
+Update LLM prompt:
+
+- Use ONLY provided severity
+- DO NOT reinterpret values
+- DO NOT introduce new diseases
+- DO NOT exaggerate
+
+Example:
+"WBC is normal" → DO NOT say infection
+
+-------------------------------------
+
+7. 🎯 DATA COMPLETENESS SCORE
+
+Calculate:
+completeness = provided_parameters / total_parameters
+
+Display:
+"Data completeness: 83%"
+
+Use this to slightly adjust confidence.
+
+-------------------------------------
+
+8. 🎨 UI ENHANCEMENTS
+
+Improve UI:
+
+- Color badges:
+  Green → Normal
+  Yellow → Moderate
+  Red → High
+
+- Section cards:
+  Explanation, Severity, Recommendations
+
+- Add icons:
+  ⚠️ Warning
+  🚨 Emergency
+
+-------------------------------------
+
+-------------------------------------
+⚠️ CONSISTENCY RULES (VERY IMPORTANT)
+-------------------------------------
+
+- High Risk → Urgency MUST be Immediate
+- Moderate Risk → Urgency MUST be Soon
+- Low Risk → Urgency MUST be Routine
+
+- Never allow:
+  High severity + Low Risk ❌
+
+-------------------------------------
+
+-------------------------------------
+🧪 TEST BEFORE FINALIZING
+-------------------------------------
+
+Test with:
+
+1. Normal case → Low risk
+2. Mild abnormal → Moderate risk
+3. Severe case → High risk + Immediate
+
+-------------------------------------
+
+-------------------------------------
+📦 OUTPUT REQUIREMENT
+-------------------------------------
+
+Return:
+- Full updated code (NOT partial)
+- No syntax errors
+- No indentation errors
+- No broken imports
+
+-------------------------------------
+
+-------------------------------------
+🏁 FINAL EXPECTATION
+-------------------------------------
+
+The system must behave like a cautious doctor:
+- Logical
+- Conservative
+- Consistent
+- Clinically realistic
+
+No hallucination allowed.

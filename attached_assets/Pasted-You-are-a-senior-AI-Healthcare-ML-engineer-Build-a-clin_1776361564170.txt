@@ -1,0 +1,264 @@
+You are a senior AI + Healthcare ML engineer.
+
+Build a clinically reliable medical report analysis system with the following strict architecture and constraints.
+
+--------------------------------------
+🚨 CORE OBJECTIVE
+--------------------------------------
+The system must:
+- Analyze structured or semi-structured medical reports
+- Provide medically realistic, safe, and consistent outputs
+- NEVER hallucinate or invent medical facts
+- Prioritize clinical correctness over creativity
+
+--------------------------------------
+🏗️ SYSTEM ARCHITECTURE (MANDATORY)
+--------------------------------------
+
+Input
+↓
+Claim Extraction
+↓
+Clinical Rule Engine (deterministic validation)
+↓
+Sanity Checks + Contradiction Detection
+↓
+Severity Analysis (rule-based)
+↓
+Risk Scoring (rule-based)
+↓
+Urgency Mapping (rule-based)
+↓
+Disease Risk Mapping (rule-based)
+↓
+LLM (ONLY for explanation, not decision)
+↓
+Simplification Layer
+↓
+Output
+
+--------------------------------------
+🧪 DATA VALIDATION RULES (CRITICAL)
+--------------------------------------
+
+Reject or flag input if:
+- Negative biological values (e.g., WBC < 0)
+- Impossible dates
+- Mixed/conflicting values (e.g., "5 or 5000")
+- Missing units or ambiguous format
+
+Return:
+"Invalid or inconsistent medical data"
+
+--------------------------------------
+⚖️ SEVERITY ENGINE (RULE-BASED ONLY)
+--------------------------------------
+
+Each parameter must be classified:
+
+Hemoglobin:
+- <10 → Severely Low
+- 10–12 → Low
+- 12–13.5 → Borderline Low
+
+WBC:
+- >20000 → Severely High
+- >11000 → High
+- <4000 → Low
+
+Glucose:
+- ≥200 → Severely High
+- 126–199 → High
+- 100–125 → Prediabetes
+
+Vitamin D:
+- <20 → Deficiency
+
+Cholesterol:
+- >240 → High
+- 200–240 → Borderline High
+
+Platelets:
+- <100000 → Severely Low
+- <150000 → Low
+
+--------------------------------------
+⚠️ RISK SCORING (VERY IMPORTANT)
+--------------------------------------
+
+Risk must NOT depend only on count.
+
+Rules:
+
+1. Count-based:
+- ≥6 → High Risk
+- ≥3 → Moderate Risk
+
+2. Severity override:
+- Any "Severely High/Low" → High Risk
+- Any "High" → at least Moderate Risk
+
+3. Never allow:
+- High severity → Low Risk ❌
+
+--------------------------------------
+🚨 URGENCY MAPPING
+--------------------------------------
+
+Rules:
+
+- Doctor remarks override system
+- Severe abnormalities → Immediate
+- Moderate → Soon
+- Mild → Routine
+
+Consistency rule:
+- High Risk → must be Immediate
+- Moderate Risk → must be Soon
+
+--------------------------------------
+📊 CONFIDENCE CALIBRATION
+--------------------------------------
+
+- Severe abnormalities → 0.9
+- ≥3 abnormal → 0.8
+- 1–2 abnormal → 0.7
+- Minimal data → 0.6
+
+Never give high confidence for incomplete data.
+
+--------------------------------------
+🧠 CORRELATION LOGIC (NOVELTY)
+--------------------------------------
+
+Combine parameters:
+
+- High WBC + Low Hb → infection with anemia
+- High glucose + high cholesterol → metabolic risk
+- Low Hb + low Vitamin D → nutritional deficiency
+
+This must be deterministic, not LLM-generated.
+
+--------------------------------------
+🦠 DISEASE RISK MAPPING
+--------------------------------------
+
+Map severity to diseases:
+
+- High WBC → Infection / Leukemia risk
+- Low Hb → Anemia
+- High glucose → Diabetes
+- Low platelets → Bleeding risk
+- High cholesterol → Cardiovascular risk
+- Low Vitamin D → Bone / immunity risk
+
+--------------------------------------
+🤖 LLM USAGE (STRICT)
+--------------------------------------
+
+The LLM must:
+- ONLY generate explanation text
+- NEVER classify severity or risk
+- NEVER override rules
+
+--------------------------------------
+📘 SIMPLIFICATION LAYER (VERY IMPORTANT)
+--------------------------------------
+
+Explanation must be:
+
+- Clinically correct
+- Simple and understandable
+- Based ONLY on validated values
+- No hallucinated parameters
+- No unrelated diseases
+
+Example:
+
+❌ Wrong:
+"may indicate multiple diseases including cancer"
+
+✅ Correct:
+"Elevated WBC suggests a possible infection or immune response"
+
+--------------------------------------
+⚠️ SAFETY RULES
+--------------------------------------
+
+- If input is invalid → stop analysis
+- If contradictions → reduce confidence
+- If critical values → prioritize emergency advice
+- Do NOT show "Clinically Verified" unless deterministic validation passed
+
+--------------------------------------
+📦 OUTPUT FORMAT
+--------------------------------------
+
+Return structured JSON:
+
+- explanation
+- risk_level
+- urgency
+- severity_breakdown
+- abnormal_count
+- confidence
+- confidence_reason
+- recommendations
+- disease_risks
+- clinical_insights
+- validation_status
+
+--------------------------------------
+🧠 MODEL SELECTION (IMPORTANT FOR PAPER)
+--------------------------------------
+
+Use:
+
+LLM:
+- BioMistral OR MedLLaMA (preferred)
+- OR Mistral / LLaMA2 if not available
+
+Why:
+- Domain-specific medical understanding
+- Better terminology handling
+
+Embedding (if RAG used):
+- BioClinicalBERT
+
+--------------------------------------
+🔬 NOVELTY CONTRIBUTION (IMPORTANT)
+--------------------------------------
+
+This system must demonstrate novelty by:
+
+- Hybrid architecture (Rule-based + LLM explanation)
+- Self-consistency validation
+- Clinical sanity checks
+- Severity-aware risk modeling
+- Confidence calibration
+- Deterministic fact-checking before LLM
+
+--------------------------------------
+🚫 DO NOT DO
+--------------------------------------
+
+- Do NOT let LLM make decisions
+- Do NOT hallucinate values
+- Do NOT overestimate risk
+- Do NOT give emergency advice unnecessarily
+
+--------------------------------------
+🎯 FINAL GOAL
+--------------------------------------
+
+The system must behave like a cautious clinician:
+- Conservative
+- Logical
+- Consistent
+- Safe
+
+Outputs must be:
+✔ Clinically realistic
+✔ Logically consistent
+✔ Explainable
+✔ Trustworthy
